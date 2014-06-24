@@ -8,9 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+@class BYServer;
+
+@protocol BYServerDelegate <NSObject>
+
+- (void)server:(BYServer*)server didRecieveMessage:(NSString*)message;
+
+@end
+
 @interface BYServer : NSObject
 
 - (void)startServer;
 - (void)stopServer;
+
+@property (nonatomic, readwrite) id <BYServerDelegate> delegate;
 
 @end
