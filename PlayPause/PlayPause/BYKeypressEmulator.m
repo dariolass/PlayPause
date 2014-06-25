@@ -8,8 +8,6 @@
 
 #import "BYKeypressEmulator.h"
 #import "BYServer.h"
-#import <Quartz/Quartz.h>
-#import <Cocoa/Cocoa.h>
 #import <IOKit/hidsystem/IOHIDLib.h>
 #import <IOKit/hidsystem/ev_keymap.h>
 
@@ -42,17 +40,13 @@ static io_connect_t get_event_driver(void)
     {
         // Get master device port
         kr = IOMasterPort( bootstrap_port, &masterPort );
-//        check( KERN_SUCCESS == kr);
         
         kr = IOServiceGetMatchingServices( masterPort, IOServiceMatching( kIOHIDSystemClass ), &iter );
-//        check( KERN_SUCCESS == kr);
         
         service = IOIteratorNext( iter );
-//        check( service );
         
         kr = IOServiceOpen( service, mach_task_self(),
                            kIOHIDParamConnectType, &sEventDrvrRef );
-//        check( KERN_SUCCESS == kr );
         
         IOObjectRelease( service );
         IOObjectRelease( iter );
@@ -67,28 +61,21 @@ static void HIDPostAuxKey( const UInt8 auxKeyCode )
     kern_return_t kr;
     IOGPoint      loc = { 0, 0 };
     
-    // Key press event
     UInt32      evtInfo = auxKeyCode << 16 | NX_KEYDOWN << 8;
     bzero(&event, sizeof(NXEventData));
     event.compound.subType = NX_SUBTYPE_AUX_CONTROL_BUTTONS;
     event.compound.misc.L[0] = evtInfo;
     kr = IOHIDPostEvent( get_event_driver(), NX_SYSDEFINED, loc, &event, kNXEventDataVersion, 0, FALSE );
-//    check( KERN_SUCCESS == kr );
     
-    // Key release event
     evtInfo = auxKeyCode << 16 | NX_KEYUP << 8;
     bzero(&event, sizeof(NXEventData));
     event.compound.subType = NX_SUBTYPE_AUX_CONTROL_BUTTONS;
     event.compound.misc.L[0] = evtInfo;
     kr = IOHIDPostEvent( get_event_driver(), NX_SYSDEFINED, loc, &event, kNXEventDataVersion, 0, FALSE );
-//    check( KERN_SUCCESS == kr );
-    
 }
 
 - (void)server:(BYServer *)server didRecieveMessage:(NSString *)message
 {
-    
-    
     if ([message isEqualToString:@"playpause"]) {
         HIDPostAuxKey(NX_KEYTYPE_PLAY);
     } else if ([message isEqualToString:@"back"]) {

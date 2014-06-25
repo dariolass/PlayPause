@@ -14,8 +14,6 @@
 @property (nonatomic, strong) BYNetworkClient   *networkClient;
 @property (nonatomic, strong) UIButton          *sendButton;
 
-- (void)buttonPressed:(UIButton*)sender;
-
 - (IBAction)playpauseButtonPressed;
 - (IBAction)backButtonPressed;
 - (IBAction)forwardButtonPressed;
@@ -36,12 +34,6 @@
         
     }
     return self;
-}
-
-
-- (void)buttonPressed:(UIButton *)sender
-{
-    [self.networkClient sendData:[@"Hey there!" dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 - (IBAction)playpauseButtonPressed
