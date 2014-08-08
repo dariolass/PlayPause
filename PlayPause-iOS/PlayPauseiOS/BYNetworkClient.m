@@ -28,12 +28,15 @@
     
 }
 
-- (void)sendData:(NSData *)data
+- (void)sendData:(NSData *)data toNetService:(NSNetService *)netService
 {
     NSOutputStream *outputStream;
-    self.netService = [[NSNetService alloc]initWithDomain:@"local." type:@"_playpause._tcp." name:@"Fuckintosh"];
-    BOOL success = [self.netService getInputStream:NULL outputStream:&outputStream];
-    assert(success);
+    BOOL success = [netService getInputStream:NULL outputStream:&outputStream];
+    if (!success) {
+        if ([self.delegate respondsToSelector:@selector(networkClientConnectionDidFail:)]) [self.delegate networkClientConnectionDidFail:self];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(networkClient:didEstablishStreamToNetService:)]) [self.delegate networkClient:self didEstablishStreamToNetService:netService];
+    }
     if (self.ongoingTransmission) return;
     self.data = [data mutableCopy];
     outputStream.delegate = self;
@@ -70,6 +73,7 @@
             self.ongoingTransmission = NO;
             byteIndex = 0;
             self.data = nil;
+            if ([self.delegate respondsToSelector:@selector(networkClientDidSendData:)]) [self.delegate networkClientDidSendData:self];
             break;
         case NSStreamEventNone:
             break;

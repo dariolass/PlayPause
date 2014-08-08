@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BYControlsViewController">
             <connections>
+                <outlet property="tableView" destination="ZIO-o0-uRy" id="WZi-g2-h6e"/>
                 <outlet property="view" destination="iN0-l3-epB" id="iQj-IU-kUb"/>
             </connections>
         </placeholder>
@@ -74,6 +76,15 @@
                         <action selector="volumeDownButtonPressed" destination="-1" eventType="touchUpInside" id="OK7-4K-cnw"/>
                     </connections>
                 </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ZIO-o0-uRy">
+                    <rect key="frame" x="0.0" y="237" width="320" height="331"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="SLQ-XI-ADx"/>
+                        <outlet property="delegate" destination="-1" id="vy6-bn-H2N"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="0.91603458737864074" green="0.91603458737864074" blue="0.91603458737864074" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

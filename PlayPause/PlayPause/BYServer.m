@@ -68,7 +68,8 @@
                                                                   name:[[NSHost currentHost] localizedName]
                                                                   port:port];
     [self.representingNetService setDelegate:self];
-    
+    NSDictionary *TXTDict = @{@"HostName": [[NSHost currentHost] localizedName]};
+    [self.representingNetService setTXTRecordData:[NSNetService dataFromTXTRecordDictionary:TXTDict]];
     [self.representingNetService publish];
 }
 

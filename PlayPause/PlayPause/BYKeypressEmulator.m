@@ -13,7 +13,7 @@
 
 @interface BYKeypressEmulator () <BYServerDelegate>
 
-@property (nonatomic, strong) BYServer *recievingServer;
+@property (nonatomic, strong) BYServer *recievingServer; 
 
 @end
 

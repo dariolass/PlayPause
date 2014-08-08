@@ -8,11 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
+@class BYNetworkClient;
+
+@protocol BYNetworkClientProtocol <NSObject>
+
+- (void)networkClient:(BYNetworkClient*)networkClient didEstablishStreamToNetService:(NSNetService*)netService;
+- (void)networkClientDidSendData:(BYNetworkClient*)networkClient;
+- (void)networkClientConnectionDidFail:(BYNetworkClient*)networkClient;
+
+@end
+
 @interface BYNetworkClient : NSObject
 
 - (void)startClient;
 - (void)stop;
 
-- (void)sendData:(NSData*)data;
+- (void)sendData:(NSData*)data toNetService:(NSNetService*)netService;
+
+@property (nonatomic, readwrite) id <BYNetworkClientProtocol> delegate;
 
 @end
